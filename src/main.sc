@@ -4,15 +4,21 @@ theme: /
 
     state: Start
         q!: $regex</start>
-        a: Начнём.
+        a: Добрый день! Я могу расчитать средний расход топлива для вашей машины или мотоцикла. Назовите модель а также год выпуска транспортного средства
+        go!: ./WhatIsYourCar
 
-    state: Hello
-        intent!: /привет
-        a: Привет привет
+    state: WhatIsYourCar
+        a: У вас машина или мотоцикл?
+        script:
+         $reactions.buttons([
+            {text: "Машина", transition: "/Car"}
+            {text: "Мотоцикл", transition: "/MotoCycle"}
+            ])~~
+        state: Car
+            a: Напишите название своей машины с годом выпуска
 
-    state: Bye
-        intent!: /пока
-        a: Пока пока
+        state: MotoCycle
+            a: Напишите название своего мотоцикла с годом выпуска
 
     state: NoMatch
         event!: noMatch
